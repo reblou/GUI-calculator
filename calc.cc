@@ -29,6 +29,7 @@ Calc::Calc()
     },
     m_button_ce ("CE")
 {
+    res = FALSE;
     set_title("Calc");
     set_border_width(10);
 
@@ -106,26 +107,51 @@ void Calc::on_number_button_clicked(string data)
 {
     //std::cout << data << std::endl;
     string ci = m_label.get_label();
-    if (ci != "0") {
+    if (ci != "0" && !res) {
         m_label.set_label(ci + data);
-
     } else {
         m_label.set_label(data);
+        res = FALSE;
     }
 }
 
 void Calc::on_ce_clicked()
 {
     m_label.set_label("0");
+    mem = 0;
+    op = "";
 }
 
-void Calc::on_op_clicked(string op)
+void Calc::on_op_clicked(string oper)
 {
     mem = stoi(m_label.get_label(), nullptr, 10);
+    op = oper;
     m_label.set_label("0");
 }
 
 void Calc::on_eq_clicked()
 {
-    m_label.set_label("ANS");
+    int ans;
+    int x = stoi(m_label.get_label(),nullptr, 10);
+
+    if (op == "+") {
+        ans = mem + x;
+    } else if (op == "-") {
+        ans = mem - x;
+    } else if (op == "*") {
+        ans = mem * x;
+    } else if (op == "/") {
+        ans = mem / x;
+    } else {
+        ans = -1;
+    }
+    m_label.set_label(to_string(ans));
+    res = TRUE;
+
+    op = "";
+}
+
+string evaluate(int x)
+{
+
 }

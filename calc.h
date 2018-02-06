@@ -18,8 +18,11 @@ private:
     void on_ce_clicked();
     void on_op_clicked(string op);
     void on_eq_clicked();
+    string evaluate(int x);
 
+    string op;
     int mem;
+    gboolean res;
 
     Gtk::Grid m_grid;
     Gtk::Button m_buttons [9];
