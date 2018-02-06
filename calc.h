@@ -15,18 +15,19 @@ public:
 
 private:
     void on_number_button_clicked(string data);
+    void on_ce_clicked();
+    void on_op_clicked(string op);
+    void on_eq_clicked();
+
+    int mem;
 
     Gtk::Grid m_grid;
-    Gtk::Button m_button1,
-    m_button2,
-    m_button3,
-    m_button4,
-    m_button5,
-    m_button6,
-    m_button7,
-    m_button8,
-    m_button9;
     Gtk::Button m_buttons [9];
+    Gtk::Button m_button0, m_button_dot, m_button_eq, m_button_ce;
+    Gtk::Button m_op_buttons [4];
+
+    Gtk::Label m_label;
+
 };
 
 #endif
