@@ -19,6 +19,27 @@ Calc::Calc()
     set_border_width(10);
 
     add(m_grid);
+    m_grid.set_hexpand(TRUE);
+    m_grid.set_vexpand(TRUE);
+
+    m_button1.set_hexpand(TRUE);
+    m_button1.set_vexpand(TRUE);
+    m_button2.set_hexpand(TRUE);
+    m_button2.set_hexpand(TRUE);
+    m_button3.set_hexpand(TRUE);
+    m_button3.set_hexpand(TRUE);
+    m_button4.set_hexpand(TRUE);
+    m_button4.set_hexpand(TRUE);
+    m_button5.set_hexpand(TRUE);
+    m_button5.set_hexpand(TRUE);
+    m_button6.set_vexpand(TRUE);
+    m_button6.set_vexpand(TRUE);
+    m_button7.set_vexpand(TRUE);
+    m_button7.set_vexpand(TRUE);
+    m_button8.set_vexpand(TRUE);
+    m_button8.set_vexpand(TRUE);
+    m_button9.set_vexpand(TRUE);
+    m_button9.set_vexpand(TRUE);
 
     m_button1.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
