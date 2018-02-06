@@ -26,6 +26,7 @@ private:
     m_button7,
     m_button8,
     m_button9;
+    Gtk::Button m_buttons [9];
 };
 
 #endif

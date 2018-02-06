@@ -5,15 +5,18 @@
 using namespace std;
 
 Calc::Calc()
-: m_button1("1"),
-    m_button2 ("2"),
-    m_button3 ("3"),
-    m_button4 ("4"),
-    m_button5 ("5"),
-    m_button6 ("6"),
-    m_button7 ("7"),
-    m_button8 ("8"),
-    m_button9 ("9")
+:
+    m_buttons {
+                Gtk::Button ("1"),
+                Gtk::Button ("2"),
+                Gtk::Button ("3"),
+                Gtk::Button ("4"),
+                Gtk::Button ("5"),
+                Gtk::Button ("6"),
+                Gtk::Button ("7"),
+                Gtk::Button ("8"),
+                Gtk::Button ("9")
+          }
 {
     set_title("Calc");
     set_border_width(10);
@@ -22,69 +25,23 @@ Calc::Calc()
     m_grid.set_hexpand(TRUE);
     m_grid.set_vexpand(TRUE);
 
-    m_button1.set_hexpand(TRUE);
-    m_button1.set_vexpand(TRUE);
-    m_button2.set_hexpand(TRUE);
-    m_button2.set_hexpand(TRUE);
-    m_button3.set_hexpand(TRUE);
-    m_button3.set_hexpand(TRUE);
-    m_button4.set_hexpand(TRUE);
-    m_button4.set_hexpand(TRUE);
-    m_button5.set_hexpand(TRUE);
-    m_button5.set_hexpand(TRUE);
-    m_button6.set_vexpand(TRUE);
-    m_button6.set_vexpand(TRUE);
-    m_button7.set_vexpand(TRUE);
-    m_button7.set_vexpand(TRUE);
-    m_button8.set_vexpand(TRUE);
-    m_button8.set_vexpand(TRUE);
-    m_button9.set_vexpand(TRUE);
-    m_button9.set_vexpand(TRUE);
+    for (Gtk::Button &button : m_buttons) {
+        button.set_hexpand(TRUE);
+        button.set_vexpand(TRUE);
+    }
 
-    m_button1.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button1.get_label()));
-    m_grid.attach(m_button1, 0, 2, 1, 1);
+    int row, column, num;
 
-    m_button2.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button2.get_label()));
-    m_grid.attach(m_button2, 1, 2, 1, 1);
+    for (Gtk::Button &button : m_buttons) {
+        num = stoi(button.get_label(), nullptr, 10);
 
-    m_button3.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button3.get_label()));
-    m_grid.attach(m_button3, 2, 2, 1, 1);
-
-    m_button4.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button4.get_label()));
-    m_grid.attach(m_button4, 0, 1, 1, 1);
-
-    m_button5.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button5.get_label()));
-    m_grid.attach(m_button5, 1, 1, 1, 1);
-
-    m_button6.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button6.get_label()));
-    m_grid.attach(m_button6, 2, 1, 1, 1);
-
-    m_button7.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button7.get_label()));
-    m_grid.attach(m_button7, 0, 0, 1, 1);
-
-    m_button8.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button8.get_label()));
-    m_grid.attach(m_button8, 1, 0, 1, 1);
-
-    m_button9.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this,
-         &Calc::on_number_button_clicked), m_button9.get_label()));
-    m_grid.attach(m_button9, 2, 0, 1, 1);
+        column = (num-1) % 3;
+        row = 2 - ((num-1) /  3);
+        button.signal_clicked().connect(sigc::bind<string>(
+            sigc::mem_fun(*this,
+             &Calc::on_number_button_clicked), button.get_label()));
+        m_grid.attach(button, column, row, 1, 1);
+    }
 
     show_all_children();
 };
