@@ -1,6 +1,7 @@
 #include "calc.h"
 #include <iostream>
 #include <string>
+#include <gtkmm.h>
 
 using namespace std;
 
@@ -95,12 +96,15 @@ Calc::Calc()
     m_button_dot.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this, &Calc::on_number_button_clicked), "."));
 
+    const Gdk::RGBA my_col ("#505050");
+    m_label.override_background_color(my_col, Gtk::STATE_FLAG_NORMAL);
+
     show_all_children();
 };
 
 Calc::~Calc()
 {
-    cout << mem << endl;
+    //cout << mem << endl;
 }
 
 void Calc::on_number_button_clicked(string data)
@@ -132,7 +136,7 @@ void Calc::on_op_clicked(string oper)
 void Calc::on_eq_clicked()
 {
     int ans;
-    int x = stoi(m_label.get_label(),nullptr, 10);
+    int x = stoi(m_label.get_label() ,nullptr, 10);
 
     if (op == "+") {
         ans = mem + x;
@@ -143,11 +147,14 @@ void Calc::on_eq_clicked()
     } else if (op == "/") {
         ans = mem / x;
     } else {
-        ans = -1;
+        m_label.set_label("ERR");
+        res = TRUE;
+        op = "";
+        return;
     }
+
     m_label.set_label(to_string(ans));
     res = TRUE;
-
     op = "";
 }
 
