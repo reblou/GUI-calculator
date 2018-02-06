@@ -6,4 +6,4 @@ It uses the gtkmm c++ interface to make the GUI with GTK+.
 
 ## Screenshots:
 
-<img src="https://raw.githubusercontent.com/reblou/gui-calculator/master/screenshot1.png" width="100%">
+<img src="https://raw.githubusercontent.com/reblou/gui-calculator/master/screenshot1.png" width="40%">
