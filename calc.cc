@@ -23,47 +23,47 @@ Calc::Calc()
     m_button1.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button1.get_label()));
-    m_grid.add(m_button1);
+    m_grid.attach(m_button1, 0, 2, 1, 1);
 
     m_button2.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button2.get_label()));
-    m_grid.add(m_button2);
+    m_grid.attach(m_button2, 1, 2, 1, 1);
 
     m_button3.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button3.get_label()));
-    m_grid.add(m_button3);
+    m_grid.attach(m_button3, 2, 2, 1, 1);
 
     m_button4.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button4.get_label()));
-    m_grid.add(m_button4);
+    m_grid.attach(m_button4, 0, 1, 1, 1);
 
     m_button5.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button5.get_label()));
-    m_grid.add(m_button5);
+    m_grid.attach(m_button5, 1, 1, 1, 1);
 
     m_button6.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button6.get_label()));
-    m_grid.add(m_button6);
+    m_grid.attach(m_button6, 2, 1, 1, 1);
 
     m_button7.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button7.get_label()));
-    m_grid.add(m_button7);
+    m_grid.attach(m_button7, 0, 0, 1, 1);
 
     m_button8.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button8.get_label()));
-    m_grid.add(m_button8);
+    m_grid.attach(m_button8, 1, 0, 1, 1);
 
     m_button9.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this,
          &Calc::on_number_button_clicked), m_button9.get_label()));
-    m_grid.add(m_button9);
+    m_grid.attach(m_button9, 2, 0, 1, 1);
 
     show_all_children();
 };
