@@ -93,8 +93,8 @@ Calc::Calc()
     }
     m_button0.signal_clicked().connect(sigc::bind<string>(
         sigc::mem_fun(*this, &Calc::on_number_button_clicked), "0"));
-    m_button_dot.signal_clicked().connect(sigc::bind<string>(
-        sigc::mem_fun(*this, &Calc::on_number_button_clicked), "."));
+    m_button_dot.signal_clicked().connect(
+        sigc::mem_fun(*this, &Calc::on_dot_clicked));
 
     const Gdk::RGBA my_col ("#505050");
     m_label.override_background_color(my_col, Gtk::STATE_FLAG_NORMAL);
@@ -105,6 +105,22 @@ Calc::Calc()
 Calc::~Calc()
 {
     //cout << mem << endl;
+}
+
+void Calc::on_dot_clicked() {
+    string ci = m_label.get_label();
+    if (ci.find(".") != string::npos) {
+        cout << "Decimal point already entered." << endl;
+        return;
+    }
+
+    if (res) {
+        m_label.set_label("0.");
+    } else {
+        m_label.set_label(ci + ".");
+    }
+
+    floating = TRUE;
 }
 
 void Calc::on_number_button_clicked(string data)
@@ -123,29 +139,47 @@ void Calc::on_ce_clicked()
 {
     m_label.set_label("0");
     mem = 0;
+    fmem = 0;
+    floating = FALSE;
     op = "";
 }
 
 void Calc::on_op_clicked(string oper)
 {
-    mem = stoi(m_label.get_label(), nullptr, 10);
+    if (floating) {
+        fmem = stof(m_label.get_label(), nullptr);
+    } else {
+        mem = stoi(m_label.get_label(), nullptr, 10);
+        fmem = (float) mem;
+    }
+
     op = oper;
     m_label.set_label("0");
 }
 
 void Calc::on_eq_clicked()
 {
+    if (floating) {
+        float x = stof(m_label.get_label(), nullptr);
+        string out = evaluate_float(x);
+        m_label.set_label(out);
+        res = TRUE;
+        op = "";
+        return;
+    }
+
     int ans;
     int x = stoi(m_label.get_label() ,nullptr, 10);
+    int stored = mem;
 
     if (op == "+") {
-        ans = mem + x;
+        ans = stored + x;
     } else if (op == "-") {
-        ans = mem - x;
+        ans = stored - x;
     } else if (op == "*") {
-        ans = mem * x;
+        ans = stored * x;
     } else if (op == "/") {
-        ans = mem / x;
+        ans = stored / x;
     } else {
         m_label.set_label("ERR");
         res = TRUE;
@@ -156,9 +190,26 @@ void Calc::on_eq_clicked()
     m_label.set_label(to_string(ans));
     res = TRUE;
     op = "";
+
 }
 
-string evaluate(int x)
+string Calc::evaluate_float(float x)
 {
-
+    float ans;
+    if (op == "+") {
+        ans = fmem + x;
+    } else if (op == "-") {
+        ans = fmem - x;
+    } else if (op == "*") {
+        ans = fmem * x;
+    } else if (op == "/") {
+        ans = fmem / x;
+    } else {
+        res = TRUE;
+        op = "";
+        return "ERR";
+    }
+     res = TRUE;
+     op = "";
+     return to_string(ans);
 }

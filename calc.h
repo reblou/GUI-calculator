@@ -18,11 +18,15 @@ private:
     void on_ce_clicked();
     void on_op_clicked(string op);
     void on_eq_clicked();
-    string evaluate(int x);
+    void on_dot_clicked();
+    string evaluate_float(float x);
 
     string op;
     int mem;
+    float fmem;
+
     gboolean res;
+    gboolean floating;
 
     Gtk::Grid m_grid;
     Gtk::Button m_buttons [9];
